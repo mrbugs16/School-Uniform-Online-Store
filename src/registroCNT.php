@@ -1,5 +1,5 @@
 <?php
-// ─── CONTROLADOR registroCNT.php ─────────────────────────────────────────────
+// ─── CONTROLADOR registroCNT.php 
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
@@ -18,7 +18,6 @@ $password    = $_POST["password"]      ?? "";
 $confirma    = $_POST["confirma"]      ?? "";
 $suscripcion = isset($_POST["suscripcion"]) ? 1 : 0;
 
-// ── Validaciones con Validator ────────────────────────────────────────────────
 if (!Validator::nombre($nombre)) {
     $_SESSION["errmsg"] = "El nombre solo puede contener letras y espacios.";
     header("Location: registro.php");
@@ -49,7 +48,6 @@ if ($password !== $confirma) {
     exit;
 }
 
-// ── Insertar usando el modelo ─────────────────────────────────────────────────
 try {
     $id = Usuario::crear($cnx, $nombre, $email, $usuario, $password, $suscripcion);
 

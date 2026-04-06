@@ -1,5 +1,5 @@
 <?php
-// ─── VISTA ────────────────────────────────────────────────────────────────────
+// ─── VISTA 
 session_start();
 $errmsg = $_SESSION["errmsg"] ?? null;
 unset($_SESSION["errmsg"]);

@@ -1,5 +1,5 @@
 <?php
-// ─── CONTROLADOR loginCNT.php ─────────────────────────────────────────────────
+// ─── CONTROLADOR 
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
@@ -14,14 +14,13 @@ include_once "db_cnx.php";
 $usuario  = trim($_POST["usuario"]  ?? "");
 $password = trim($_POST["password"] ?? "");
 
-// Validar que no estén vacíos
 if (!Validator::texto($usuario) || !Validator::texto($password)) {
     $_SESSION["errmsg"] = "Usuario y contraseña son obligatorios.";
     header("Location: login.php");
     exit;
 }
 
-// Buscar usuario en BD usando el modelo
+// BUSCAR USUARIO EN BD 
 $row = Usuario::getByUsuario($cnx, $usuario);
 
 if ($row === false) {
@@ -30,14 +29,14 @@ if ($row === false) {
     exit;
 }
 
-// Verificar contraseña con password_verify (igual que en el repo)
+// VERIFICAR CONTRASEÑA CON PASSWORD_VERIFY
 if (!password_verify($password, $row["password"])) {
     $_SESSION["errmsg"] = "Las credenciales no son válidas.";
     header("Location: login.php");
     exit;
 }
 
-// Guardar datos en sesión
+// GUARDAR DATOS EN SESION
 $_SESSION["id_usuario"] = $row["id_usuario"];
 $_SESSION["usuario"]    = $row["usuario"];
 $_SESSION["nombre"]     = $row["nombre"];

@@ -1,18 +1,14 @@
 <?php
-// ─── Pedido.php ───────────────────────────────────────────────────────────────
-// Modelo de las entidades Pedido y DetallePedido.
-// ─────────────────────────────────────────────────────────────────────────────
-
 class Pedido {
 
-    // ── Propiedades ──────────────────────────────────────────────────────────
+    
     public int    $id_pedido;
     public int    $id_usuario;
     public string $fecha_pedido;
     public float  $total;
     public string $estado;
 
-    // ── Constructor ──────────────────────────────────────────────────────────
+    // CONSTRUCTOR
     public function __construct(array $data) {
         $this->id_pedido    = $data['id_pedido'];
         $this->id_usuario   = $data['id_usuario'];
@@ -21,9 +17,7 @@ class Pedido {
         $this->estado       = $data['estado'];
     }
 
-    // ── Métodos estáticos (consultas) ─────────────────────────────────────────
-
-    // Crear un pedido nuevo (pendiente) para el usuario
+    // CREAR UN PEDIDO NUEVO 
     public static function crear($cnx, int $id_usuario): int {
         $stmt = $cnx->prepare(
             "INSERT INTO pedidos (id_usuario) VALUES (?)"
@@ -32,7 +26,7 @@ class Pedido {
         return (int)$cnx->lastInsertId();
     }
 
-    // Agregar una prenda al detalle del pedido
+    // AGREGAR UNA PRENDA AL DETALLE DEL PEDIDO
     public static function agregarDetalle($cnx, int $id_pedido, int $id_prenda,
                                            ?string $talla, int $cantidad,
                                            float $precio_unitario) {
@@ -43,7 +37,7 @@ class Pedido {
         $stmt->execute([$id_pedido, $id_prenda, $talla, $cantidad, $precio_unitario]);
     }
 
-    // Actualizar el total del pedido sumando su detalle
+    // ACTUALIZAR EL TOTAL DEL PEDIDO SUMANDO SU DETALLE
     public static function actualizarTotal($cnx, int $id_pedido) {
         $stmt = $cnx->prepare(
             "UPDATE pedidos
@@ -57,7 +51,7 @@ class Pedido {
         $stmt->execute([$id_pedido, $id_pedido]);
     }
 
-    // Obtener pedidos de un usuario
+    // OBTENER PEDIDOS DE UN USUARIO
     public static function getByUsuario($cnx, int $id_usuario) {
         $stmt = $cnx->prepare(
             "SELECT * FROM pedidos WHERE id_usuario = ? ORDER BY fecha_pedido DESC"
@@ -66,7 +60,7 @@ class Pedido {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Obtener el detalle (prendas) de un pedido
+    // OBTENER EL DETALLE (PRENDAS) DE UN PEDIDO
     public static function getDetalle($cnx, int $id_pedido) {
         $stmt = $cnx->prepare(
             "SELECT dp.*, p.nombre, p.imagen

@@ -1,5 +1,5 @@
 <?php
-// ─── VISTA carrito.php ────────────────────────────────────────────────────────
+// ─── VISTA 
 session_start();
 
 if (!isset($_SESSION["id_usuario"])) {

@@ -1,5 +1,5 @@
 <?php
-// ─── VISTA catalogo.php ───────────────────────────────────────────────────────
+// ─── VISTA 
 session_start();
 
 if (!isset($_SESSION["id_usuario"])) {
@@ -11,10 +11,10 @@ require_once "models/Categoria.php";
 require_once "models/Prenda.php";
 include_once "db_cnx.php";
 
-// ── Lógica del controlador (obtener datos con los modelos) ────────────────────
+// LOGICA DEL CONTROLADOR
 $categorias = Categoria::getAll($cnx);
 
-// Filtro de categoría por GET (igual que tables1_css_get.php del repo)
+// FILTRO DE CATEGORIA POR GET
 $filtro = isset($_GET["categoria"]) && is_numeric($_GET["categoria"])
         ? (int)$_GET["categoria"]
         : 0;

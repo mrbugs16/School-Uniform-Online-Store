@@ -1,11 +1,9 @@
 <?php
-// ─── VISTA admin/usuarios.php ────────────────────────────────────────────────
-// Solo accesible para superusuario
+
+//SUPERUSUARIO
 session_start();
 
 require_once "../models/Usuario.php";
-
-// Verificar que sea superusuario antes de mostrar nada
 if (!Usuario::esSuperUsuario($_SESSION)) {
     header("Location: ../login.php");
     exit;

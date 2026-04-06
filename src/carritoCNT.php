@@ -1,5 +1,5 @@
 <?php
-// ─── CONTROLADOR carritoCNT.php ───────────────────────────────────────────────
+// ─── CONTROLADOR 
 session_start();
 
 if (!isset($_SESSION["id_usuario"])) {
@@ -21,7 +21,7 @@ $id_prenda = $_POST["id_prenda"] ?? "";
 $talla     = $_POST["talla"]     ?? null;
 $cantidad  = $_POST["cantidad"]  ?? "";
 
-// ── Validaciones con Validator ────────────────────────────────────────────────
+// VALIDACIONES CON VALIDATOR
 if (!Validator::numero($id_prenda)) {
     $_SESSION["errmsg"] = "Prenda inválida.";
     header("Location: catalogo.php");
@@ -34,7 +34,7 @@ if (!Validator::cantidad($cantidad)) {
     exit;
 }
 
-// Verificar prenda en BD
+// VERIFICAR PRENDA EN BD
 $prenda = Prenda::getById($cnx, (int)$id_prenda);
 if (!$prenda) {
     $_SESSION["errmsg"] = "La prenda no existe.";
@@ -49,18 +49,18 @@ if ($prenda['tiene_talla'] && !Validator::talla($talla)) {
     exit;
 }
 
-// Si no tiene talla, forzar null
+// SI NO TIENE TALLA
 if (!$prenda['tiene_talla']) {
     $talla = null;
 }
 
-// ── Crear o reutilizar pedido pendiente en sesión ─────────────────────────────
+// CREAR O REUTILIZAR PEDIDO PENDIENTE EN SESION
 if (!isset($_SESSION["id_pedido"])) {
     $id_pedido = Pedido::crear($cnx, (int)$_SESSION["id_usuario"]);
     $_SESSION["id_pedido"] = $id_pedido;
 }
 
-// Agregar al detalle
+// AGREGAR AL DETALLE
 Pedido::agregarDetalle(
     $cnx,
     (int)$_SESSION["id_pedido"],
@@ -70,7 +70,7 @@ Pedido::agregarDetalle(
     (float)$prenda['precio']
 );
 
-// Actualizar total
+// ACTUALIZAR TOTAL
 Pedido::actualizarTotal($cnx, (int)$_SESSION["id_pedido"]);
 
 header("Location: carrito.php");

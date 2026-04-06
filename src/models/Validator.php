@@ -1,45 +1,40 @@
 <?php
-// ─── Validator.php ────────────────────────────────────────────────────────────
-// Clase con métodos estáticos para validar los datos del formulario.
-// Se usa igual que en registroCNT.php del repo, pero centralizado en una clase.
-// ─────────────────────────────────────────────────────────────────────────────
-
 class Validator {
 
-    // Valida que el nombre solo tenga letras y espacios
+    // VALIDA QUE EL NOMBRE SOLO TENGA LETRAS Y ESPACIOS
     public static function nombre($valor) {
         return isset($valor) &&
                preg_match("/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/", trim($valor));
     }
 
-    // Valida formato de correo electrónico
+    // VALIDA FORMATO DE CORREO ELECTRONICO
     public static function email($valor) {
         return isset($valor) &&
                filter_var(trim($valor), FILTER_VALIDATE_EMAIL);
     }
 
-    // Valida que la contraseña tenga al menos 6 caracteres
+    // VALIDA QUE LA CONTRASEÑA TENGA AL MENOS 6 CARACTERES
     public static function password($valor) {
         return isset($valor) && strlen(trim($valor)) >= 6;
     }
 
-    // Valida que un campo de texto no esté vacío
+    // VALIDA QUE UN CAMPO DE TEXTO NO ESTE VACIO
     public static function texto($valor) {
         return isset($valor) && trim($valor) !== "";
     }
 
-    // Valida que sea un número positivo
+    // VALIDA QUE SEA UN NUMERO POSITIVO
     public static function numero($valor) {
         return isset($valor) && is_numeric($valor) && $valor > 0;
     }
 
-    // Valida que la talla sea una de las permitidas
+    // VALIDA QUE LA TALLA SEA UNA DE LAS PERMITIDAS
     public static function talla($valor) {
         $tallasValidas = ['S', 'M', 'L', 'XL'];
         return isset($valor) && in_array($valor, $tallasValidas);
     }
 
-    // Valida que la cantidad sea un entero positivo
+    // VALIDA QUE LA CANTIDAD SEA UN ENTERO POSITIVO
     public static function cantidad($valor) {
         return isset($valor) &&
                preg_match("/^[0-9]+$/", $valor) &&
